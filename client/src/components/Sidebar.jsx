@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import {
   MdDashboard,
   MdOutlineAddTask,
@@ -64,7 +65,6 @@ const Sidebar = () => {
     dispatch(setOpenSidebar(false));
   };
 
-  import PropTypes from 'prop-types';
 
   const NavLink = ({ el }) => {
     return (
