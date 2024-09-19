@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import TaskCard from "./TaskCard";
 
 const BoardView = ({ tasks }) => {
@@ -9,6 +10,10 @@ const BoardView = ({ tasks }) => {
       ))}
     </div>
   );
+};
+
+BoardView.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default BoardView;

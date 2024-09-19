@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import ModalWrapper from "./ModalWrapper";
@@ -104,6 +105,11 @@ const AddUser = ({ open, setOpen, userData }) => {
       </ModalWrapper>
     </>
   );
+};
+AddUser.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  userData: PropTypes.object,
 };
 
 export default AddUser;

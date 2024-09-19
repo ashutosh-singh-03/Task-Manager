@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React from "react";
+import PropTypes from "prop-types";
 
 const Button = ({ icon, className, label, type, onClick = () => {} }) => {
   return (
@@ -12,6 +13,14 @@ const Button = ({ icon, className, label, type, onClick = () => {} }) => {
       {icon && icon}
     </button>
   );
+};
+
+Button.propTypes = {
+  icon: PropTypes.node,
+  className: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default Button;

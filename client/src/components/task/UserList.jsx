@@ -1,5 +1,6 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { BsChevronExpand } from "react-icons/bs";
 import { summary } from "../../assets/data";
 import clsx from "clsx";
@@ -92,5 +93,10 @@ const UserList = ({ setTeam, team }) => {
     </div>
   );
 };
+UserList.propTypes = {
+  setTeam: PropTypes.func.isRequired,
+  team: PropTypes.array.isRequired,
+};
 
+export default UserList;
 export default UserList;

@@ -1,18 +1,18 @@
+import clsx from "clsx";
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { BiMessageAltDetail } from "react-icons/bi";
+import { FaList } from "react-icons/fa";
 import {
   MdAttachFile,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { toast } from "sonner";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../utils";
-import clsx from "clsx";
-import { FaList } from "react-icons/fa";
-import UserInfo from "../UserInfo";
 import Button from "../Button";
 import ConfirmatioDialog from "../Dialogs";
+import UserInfo from "../UserInfo";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -145,6 +145,25 @@ const Table = ({ tasks }) => {
       />
     </>
   );
+};
+Table.propTypes = {
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      stage: PropTypes.string.isRequired,
+      priority: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      activities: PropTypes.array,
+      assets: PropTypes.array,
+      subTasks: PropTypes.array,
+      team: PropTypes.arrayOf(
+        PropTypes.shape({
+          _id: PropTypes.string.isRequired,
+        })
+      ),
+    })
+  ).isRequired,
 };
 
 export default Table;

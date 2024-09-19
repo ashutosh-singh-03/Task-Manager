@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React from "react";
+import PropTypes from "prop-types";
 import { IoMdAdd } from "react-icons/io";
 
 const TaskTitle = ({ label, className }) => {
@@ -15,6 +16,10 @@ const TaskTitle = ({ label, className }) => {
       </button>
     </div>
   );
+};
+TaskTitle.propTypes = {
+  label: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default TaskTitle;

@@ -1,10 +1,11 @@
 import { Dialog } from "@headlessui/react";
 import clsx from "clsx";
 import { FaQuestion } from "react-icons/fa";
-import ModalWrapper from "./ModalWrapper";
+import PropTypes from "prop-types"; // Import PropTypes
 import Button from "./Button";
+import ModalWrapper from "./ModalWrapper";
 
-export default function ConfirmatioDialog({
+export default function ConfirmationDialog({
   open,
   setOpen,
   msg,
@@ -66,6 +67,17 @@ export default function ConfirmatioDialog({
   );
 }
 
+// Add prop types validation
+ConfirmationDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  msg: PropTypes.string,
+  setMsg: PropTypes.func,
+  onClick: PropTypes.func,
+  type: PropTypes.string,
+  setType: PropTypes.func,
+};
+
 export function UserAction({ open, setOpen, onClick = () => {} }) {
   const closeDialog = () => {
     setOpen(false);
@@ -108,3 +120,10 @@ export function UserAction({ open, setOpen, onClick = () => {} }) {
     </>
   );
 }
+
+// Add prop types validation for UserAction
+UserAction.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+};

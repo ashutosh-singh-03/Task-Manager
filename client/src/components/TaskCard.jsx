@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
   MdAttachFile,
   MdKeyboardArrowDown,
@@ -125,6 +126,19 @@ const TaskCard = ({ task }) => {
       <AddSubTask open={open} setOpen={setOpen} id={task._id} />
     </>
   );
+};
+TaskCard.propTypes = {
+  task: PropTypes.shape({
+    priority: PropTypes.string,
+    stage: PropTypes.string,
+    title: PropTypes.string,
+    date: PropTypes.string,
+    activities: PropTypes.array,
+    assets: PropTypes.array,
+    subTasks: PropTypes.array,
+    team: PropTypes.arrayOf(PropTypes.object),
+    _id: PropTypes.string,
+  }).isRequired,
 };
 
 export default TaskCard;

@@ -64,6 +64,8 @@ const Sidebar = () => {
     dispatch(setOpenSidebar(false));
   };
 
+  import PropTypes from 'prop-types';
+
   const NavLink = ({ el }) => {
     return (
       <Link
@@ -78,6 +80,14 @@ const Sidebar = () => {
         <span className="hover:text-[#2564ed]">{el.label}</span>
       </Link>
     );
+  };
+
+  NavLink.propTypes = {
+    el: PropTypes.shape({
+      link: PropTypes.string.isRequired,
+      icon: PropTypes.element.isRequired,
+      label: PropTypes.string.isRequired,
+    }).isRequired,
   };
   return (
     <div className="w-full  h-full flex flex-col gap-6 p-5">

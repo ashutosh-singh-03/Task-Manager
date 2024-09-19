@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import PropTypes from "prop-types";
 import ModalWrapper from "../ModalWrapper";
 import { Dialog } from "@headlessui/react";
 import Textbox from "../Textbox";
@@ -92,6 +93,12 @@ const AddSubTask = ({ open, setOpen, id }) => {
       </ModalWrapper>
     </>
   );
+};
+
+AddSubTask.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default AddSubTask;

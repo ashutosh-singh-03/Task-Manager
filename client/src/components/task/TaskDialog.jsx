@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { AiTwotoneFolderOpen } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
@@ -119,6 +120,11 @@ const TaskDialog = ({ task }) => {
       />
     </>
   );
+};
+TaskDialog.propTypes = {
+  task: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default TaskDialog;
