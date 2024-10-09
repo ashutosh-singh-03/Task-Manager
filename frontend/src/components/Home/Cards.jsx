@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
