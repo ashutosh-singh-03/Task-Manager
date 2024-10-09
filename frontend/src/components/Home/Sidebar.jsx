@@ -18,14 +18,14 @@ const Sidebar = () => {
       link: "/importantTasks",
     },
     {
-      title: "Completed Tasks",
-      icon: <FaCheckDouble />,
-      link: "/completedTasks",
-    },
-    {
       title: "Incomplete Tasks",
       icon: <TbNotebookOff />,
       link: "/IncompleteTasks",
+    },
+    {
+      title: "Completed Tasks",
+      icon: <FaCheckDouble />,
+      link: "/completedTasks",
     },
   ];
   return (
