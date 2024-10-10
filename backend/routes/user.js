@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 //SignIn
-router.post("/sign-in", async (req, res) => {
+router.post("/signin", async (req, res) => {
   try {
     const { username } = req.body;
     const { email } = req.body;
@@ -35,7 +35,7 @@ router.post("/sign-in", async (req, res) => {
 });
 
 //Login
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const existingUser = await User.findOne({ username: username });
   if (!existingUser) {
