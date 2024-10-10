@@ -1,10 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Cards from "../components/Home/Cards";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import InputData from "../components/Home/InputData";
+import axios from "axios";
 
 const AllTasks = () => {
   const [InputDiv, setInputDiv] = useState("hidden");
+  const [Data, setData] = useState([]);
+  const [UpdatedData, setUpdatedData] = useState({
+    id: "",
+    title: "",
+    desc: "",
+  });
+  const headers = {
+    id: localStorage.getItem("id"),
+    authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get(
+        "http://localhost:8000/api/v2/get-all-tasks",
+        { headers }
+      );
+      setData(response.data.data);
+    };
+    fetch();
+  });
   return (
     <>
       <div>
@@ -13,9 +34,21 @@ const AllTasks = () => {
             <IoIosAddCircleOutline className="text-4xl text-gray-400 hover:text-gray-100 transition-all duration-300" />
           </button>
         </div>
-        <Cards home={"true"} setInputDiv={setInputDiv} />
+        {Data && (
+          <Cards
+            home={"true"}
+            setInputDiv={setInputDiv}
+            data={Data.tasks}
+            setUpdatedData={setUpdatedData}
+          />
+        )}
       </div>
-      <InputData InputDiv={InputDiv} setInputDiv={setInputDiv} />
+      <InputData
+        InputDiv={InputDiv}
+        setInputDiv={setInputDiv}
+        UpdatedData={UpdatedData}
+        setUpdatedData={setUpdatedData}
+      />
     </>
   );
 };

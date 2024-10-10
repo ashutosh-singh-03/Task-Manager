@@ -1,7 +1,50 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
-const InputData = ({ InputDiv, setInputDiv }) => {
+const InputData = ({ InputDiv, setInputDiv, UpdatedData, setUpdatedData }) => {
+  const [Data, setData] = useState({ title: "", desc: "" });
+
+  useEffect(() => {
+    setData({ title: UpdatedData.title, desc: UpdatedData.desc });
+  }, [UpdatedData]);
+
+  const headers = {
+    id: localStorage.getItem("id"),
+    authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+  const change = (e) => {
+    const { name, value } = e.target;
+    setData({ ...Data, [name]: value });
+  };
+  const submitData = async () => {
+    if (Data.title === "" || Data.desc === "") {
+      alert("All fields are required");
+    } else {
+      await axios.post("http://localhost:8000/api/v2/create-task", Data, {
+        headers,
+      });
+      setData({ title: "", desc: "" });
+      setInputDiv("hidden");
+    }
+  };
+
+  const UpdateTask = async () => {
+    if (Data.title === "" || Data.desc === "") {
+      alert("All fields are required");
+    } else {
+      await axios.put(
+        `http://localhost:8000/api/v2/update-task/${UpdatedData.id}`,
+        Data,
+        {
+          headers,
+        }
+      );
+      setUpdatedData({ id: "", title: "", desc: "" });
+      setData({ title: "", desc: "" });
+      setInputDiv("hidden");
+    }
+  };
   return (
     <>
       <div
@@ -12,7 +55,14 @@ const InputData = ({ InputDiv, setInputDiv }) => {
       >
         <div className="w-2/6 bg-gray-900 p-4 rounded">
           <div className="flex justify-end">
-            <button className="text-2xl" onClick={() => setInputDiv("hidden")}>
+            <button
+              className="text-2xl"
+              onClick={() => {
+                setInputDiv("hidden");
+                setData({ title: "", desc: "" }); // Reset the input fields
+                setUpdatedData({ id: "", title: "", desc: "" }); // Reset the updated data
+              }}
+            >
               <IoCloseCircleOutline />
             </button>
           </div>
@@ -21,6 +71,8 @@ const InputData = ({ InputDiv, setInputDiv }) => {
             name="title"
             placeholder="Title"
             className="px-3 py-2 rounded w-full bg-gray-700 my-3"
+            value={Data.title}
+            onChange={change}
           />
           <textarea
             name="desc"
@@ -28,10 +80,24 @@ const InputData = ({ InputDiv, setInputDiv }) => {
             rows="10"
             placeholder="Description of the Task.."
             className="px-3 py-2 rounded w-full bg-gray-700 my-3"
+            value={Data.desc}
+            onChange={change}
           ></textarea>
-          <button className="px-3 py-2 bg-blue-400 rounded text-black text-xl font-semibold">
-            Submit
-          </button>
+          {UpdatedData.id === "" ? (
+            <button
+              className="px-3 py-2 bg-blue-400 rounded text-black text-xl font-semibold"
+              onClick={UpdateTask}
+            >
+              Submit
+            </button>
+          ) : (
+            <button
+              className="px-3 py-2 bg-blue-400 rounded text-black text-xl font-semibold"
+              onClick={submitData}
+            >
+              Update
+            </button>
+          )}
         </div>
       </div>
     </>

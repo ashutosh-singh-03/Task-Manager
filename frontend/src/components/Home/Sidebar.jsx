@@ -1,11 +1,16 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { CgNotes } from "react-icons/cg";
-import { MdLabelImportant } from "react-icons/md";
 import { FaCheckDouble } from "react-icons/fa";
+import { MdLabelImportant } from "react-icons/md";
 import { TbNotebookOff } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { authActions } from "../../store/auth";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const history = useNavigate();
   const data = [
     {
       title: "All Tasks",
@@ -28,13 +33,39 @@ const Sidebar = () => {
       link: "/completedTasks",
     },
   ];
+  const [Data, setData] = useState();
+  const logout = () => {
+    dispatch(authActions.logout());
+    localStorage.clear("id");
+    localStorage.clear("token");
+    history("/login");
+  };
+
+  const headers = {
+    id: localStorage.getItem("id"),
+    authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get(
+        "http://localhost:8000/api/v2/get-all-tasks",
+        { headers }
+      );
+      setData(response.data.data);
+    };
+    if (localStorage.getItem("id") && localStorage.getItem("token")) {
+      fetch();
+    }
+  });
   return (
     <>
-      <div>
-        <h2 className="text-xl font-semibold">Task Manager</h2>
-        <h4 className="mb-1 text-gray-400">ashutosh@gmail.com</h4>
-        <hr />
-      </div>
+      {Data && (
+        <div>
+          <h2 className="text-xl font-semibold">{Data.username}</h2>
+          <h4 className="mb-1 text-gray-400">{Data.email}</h4>
+          <hr />
+        </div>
+      )}
       <div>
         {data.map((items, i) => (
           <Link
@@ -47,7 +78,9 @@ const Sidebar = () => {
         ))}
       </div>
       <div>
-        <button className="bg-gray-600 w-full p-2 rounded">Log Out</button>
+        <button className="bg-gray-600 w-full p-2 rounded" onClick={logout}>
+          Log Out {""}
+        </button>
       </div>
     </>
   );

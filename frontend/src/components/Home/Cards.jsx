@@ -1,33 +1,54 @@
+import axios from "axios";
 import React from "react";
 import { CiHeart } from "react-icons/ci";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaHeart } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
 
-const Cards = ({ home, setInputDiv }) => {
-  const data = [
-    {
-      title: "Ashutosh Singh",
-      desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, numquam?",
-      status: "Incomplete",
-    },
-    {
-      title: "Shivam Kumar",
-      desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, numquam?",
-      status: "Complete",
-    },
-    {
-      title: "Pinkesh Kumar",
-      desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, numquam?",
-      status: "Incomplete",
-    },
-    {
-      title: "Ankit Kumar",
-      desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, numquam?",
-      status: "Incomplete",
-    },
-  ];
+const Cards = ({ home, setInputDiv, data, setUpdatedData }) => {
+  const headers = {
+    id: localStorage.getItem("id"),
+    authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+  const handleCompleteTask = async (id) => {
+    try {
+      await axios.put(
+        `http://localhost:8000/api/v2/update-complete-task/${id}`,
+        {},
+        { headers }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleImportantTask = async (id) => {
+    try {
+      await axios.put(
+        `http://localhost:8000/api/v2/update-imp-task/${id}`,
+        {},
+        { headers }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const handleUpdate = (id, title, desc) => {
+    setInputDiv("fixed");
+    setUpdatedData({ id: id, title: title, desc: desc });
+  };
+
+  const deleteTask = async (id) => {
+    try {
+      await axios.delete(
+        `http://localhost:8000/api/v2/delete-task/${id}`,
+        {},
+        { headers }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="grid grid-cols-3 gap-4 p-4">
       {data &&
@@ -40,19 +61,30 @@ const Cards = ({ home, setInputDiv }) => {
             <div className="mt-4 w-full flex items-center">
               <button
                 className={`${
-                  items.status === "Incomplete" ? "bg-red-400" : "bg-green-700"
+                  items.complete === false ? "bg-red-400" : "bg-green-700"
                 } p-2 rounded w-3/6 hover:scale-105`}
+                onClick={() => handleCompleteTask(items._id)}
               >
-                {items.status}
+                {items.complete === true ? "Completed" : "Incomplete"}
               </button>
               <div className="text-white p-2 w-3/6 text-2xl font-semibold flex justify-around">
-                <button>
-                  <CiHeart />
+                <button onClick={() => handleImportantTask(items._id)}>
+                  {items.important === false ? (
+                    <CiHeart />
+                  ) : (
+                    <FaHeart className="text-red-500" />
+                  )}
                 </button>
-                <button>
-                  <FaEdit />
-                </button>
-                <button>
+                {home !== "false" && (
+                  <button
+                    onClick={() =>
+                      handleUpdate(items._id, items.title, items.desc)
+                    }
+                  >
+                    <FaEdit />
+                  </button>
+                )}
+                <button onClick={() => deleteTask(items._id)}>
                   <MdDeleteOutline />
                 </button>
               </div>
