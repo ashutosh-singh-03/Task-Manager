@@ -61,9 +61,9 @@ const Sidebar = () => {
     <>
       {Data && (
         <div>
-          <h2 className="text-xl font-semibold">{Data.username}</h2>
+          <h2 className="text-xl font-semibold text-white">{Data.username}</h2>
           <h4 className="mb-1 text-gray-400">{Data.email}</h4>
-          <hr />
+          <hr className="border-gray-600" />
         </div>
       )}
       <div>
@@ -71,14 +71,15 @@ const Sidebar = () => {
           <Link
             to={items.link}
             key={i}
-            className="my-2 flex items-center hover:bg-gray-600 p-2 rounded transition-all duration-300"
+            className="my-2 flex items-center p-2 rounded-lg text-white hover:bg-gray-600 transition-all duration-300"
+            aria-label={`Navigate to ${items.title}`}
           >
             {items.icon}&nbsp; {items.title}
           </Link>
         ))}
       </div>
       <div>
-        <button className="bg-gray-600 w-full p-2 rounded" onClick={logout}>
+        <button className="bg-gray-600 w-full p-2 rounded-lg text-white hover:bg-gray-500 transition-all duration-300" onClick={logout} aria-label="Log out">
           Log Out {""}
         </button>
       </div>

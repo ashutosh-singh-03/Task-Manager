@@ -53,15 +53,16 @@ const InputData = ({ InputDiv, setInputDiv, UpdatedData, setUpdatedData }) => {
       <div
         className={`${InputDiv} top-0 left-0 w-full h-screen flex items-center justify-center`}
       >
-        <div className="w-2/6 bg-gray-900 p-4 rounded">
+        <div className="w-2/6 bg-gray-900 p-4 rounded-lg shadow-md">
           <div className="flex justify-end">
             <button
-              className="text-2xl"
+              className="text-2xl text-white"
               onClick={() => {
                 setInputDiv("hidden");
-                setData({ title: "", desc: "" }); // Reset the input fields
-                setUpdatedData({ id: "", title: "", desc: "" }); // Reset the updated data
+                setData({ title: "", desc: "" });
+                setUpdatedData({ id: "", title: "", desc: "" });
               }}
+              aria-label="Close input form"
             >
               <IoCloseCircleOutline />
             </button>
@@ -70,30 +71,36 @@ const InputData = ({ InputDiv, setInputDiv, UpdatedData, setUpdatedData }) => {
             type="text"
             name="title"
             placeholder="Title"
-            className="px-3 py-2 rounded w-full bg-gray-700 my-3"
+            className="px-3 py-2 rounded w-full bg-gray-700 my-3 text-white"
             value={Data.title}
             onChange={change}
+            required
+            aria-label="Task title"
           />
           <textarea
             name="desc"
             cols="30"
             rows="10"
             placeholder="Description of the Task.."
-            className="px-3 py-2 rounded w-full bg-gray-700 my-3"
+            className="px-3 py-2 rounded w-full bg-gray-700 my-3 text-white"
             value={Data.desc}
             onChange={change}
+            required
+            aria-label="Task description"
           ></textarea>
           {UpdatedData.id === "" ? (
             <button
-              className="px-3 py-2 bg-blue-400 rounded text-black text-xl font-semibold"
-              onClick={UpdateTask}
+              className="px-3 py-2 bg-blue-400 rounded text-black text-xl font-semibold hover:bg-blue-500"
+              onClick={submitData}
+              aria-label="Submit task"
             >
               Submit
             </button>
           ) : (
             <button
-              className="px-3 py-2 bg-blue-400 rounded text-black text-xl font-semibold"
-              onClick={submitData}
+              className="px-3 py-2 bg-blue-400 rounded text-black text-xl font-semibold hover:bg-blue-500"
+              onClick={UpdateTask}
+              aria-label="Update task"
             >
               Update
             </button>
